@@ -3,53 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>貓喵商城 | Cat Meow Shop</title>
+  <title>貓喵商城 | Cat-Shop</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background: radial-gradient(ellipse at bottom, #0a0c1b 0%, #050610 100%);
+      background: linear-gradient(135deg, #0e0f1a, #1a1b2e);
       color: #fff;
       overflow-x: hidden;
       position: relative;
     }
 
     body::before {
-      content: "";
+      content: '';
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: repeating-radial-gradient(circle, rgba(0,255,255,0.07) 1px, transparent 2px);
-      background-size: 40px 40px;
-      animation: stars 100s linear infinite;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.2), transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.2), transparent 40%);
       z-index: -1;
+      animation: pulse 8s infinite alternate;
     }
 
-    @keyframes stars {
-      0% { background-position: 0 0; }
-      100% { background-position: 1000px 1000px; }
+    @keyframes pulse {
+      0% { filter: blur(40px); }
+      100% { filter: blur(80px); }
     }
 
     section {
       min-height: 100vh;
-      padding: 60px 20px;
+      padding: 80px 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: rgba(0, 0, 0, 0.35);
-      border-bottom: 1px solid rgba(0, 255, 255, 0.1);
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(10px);
     }
 
     h1, h2 {
       font-weight: 700;
-      text-shadow: 0 0 10px #00e0ff, 0 0 20px #00e0ff88;
+      text-shadow: 0 0 15px #00e0ff;
     }
 
     p, li {
@@ -65,8 +60,18 @@
     header img {
       width: 140px;
       border-radius: 20px;
-      box-shadow: 0 0 30px #00f2ffaa;
+      box-shadow: 0 0 30px #00f2ff99;
       margin-bottom: 20px;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 800px;
+      width: 90%;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     ul {
@@ -78,31 +83,31 @@
       width: 100%;
       max-width: 600px;
       border-radius: 16px;
-      box-shadow: 0 0 20px #00f0ff55;
+      box-shadow: 0 0 20px #00f0ff88;
       margin-top: 20px;
     }
 
     a.button {
       display: inline-block;
       margin: 10px;
-      padding: 10px 20px;
+      padding: 12px 28px;
       border-radius: 30px;
-      background-color: #00e5ff;
+      background: linear-gradient(90deg, #00e5ff, #00ffa2);
       color: #000;
       text-decoration: none;
       font-weight: bold;
-      box-shadow: 0 0 10px #00e5ff88;
+      box-shadow: 0 0 15px #00e5ff88;
       transition: all 0.3s ease;
     }
 
     a.button:hover {
-      background-color: #00c6e2;
-      box-shadow: 0 0 20px #00f2ff;
+      background: linear-gradient(90deg, #00c6e2, #00ffcc);
+      box-shadow: 0 0 25px #00f2ff;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
+      padding: 30px;
       background-color: #0a0b13;
       font-size: 0.9rem;
       color: #888;
@@ -114,38 +119,46 @@
   <section id="home">
     <header>
       <img src="logo.JPG" alt="貓喵商城 LOGO" />
-      <h1>貓喵商城 Cat Meow Shop</h1>
+      <h1>貓喵商城 Cat-Shop</h1>
       <p>一站式遊戲代儲與數位商品代購平台</p>
     </header>
   </section>
 
   <section id="about">
-    <h2>我們是誰？</h2>
-    <p>貓喵商城是專為玩家打造的數位服務平台，涵蓋遊戲儲值、影音帳號、訂閱代購與數位工具，快速、安全、價格實惠。</p>
+    <div class="glass-card">
+      <h2>我們是誰？</h2>
+      <p>貓喵商城是專為玩家打造的數位服務平台，涵蓋遊戲儲值、影音帳號、訂閱代購與數位工具，快速、安全、價格實惠。</p>
+    </div>
   </section>
 
   <section id="services">
-    <h2>服務項目</h2>
-    <ul>
-      <li>遊戲代儲：Roblox、傳說對決、Discord Nitro</li>
-      <li>影音代購：YouTube Premium、Netflix、Spotify</li>
-      <li>數位工具：VPN、ChatGPT Plus、虛擬卡</li>
-      <li>客服與Bot：表單問卷、Discord 機器人</li>
-    </ul>
+    <div class="glass-card">
+      <h2>服務項目</h2>
+      <ul>
+        <li>遊戲代儲：Roblox、傳說對決、Discord Nitro</li>
+        <li>影音代購：YouTube Premium、Netflix、Spotify</li>
+        <li>數位工具：VPN、ChatGPT Plus、虛擬卡</li>
+        <li>客服與Bot：表單問卷、Discord 機器人</li>
+      </ul>
+    </div>
   </section>
 
   <section id="team">
-    <h2>客服人員介紹</h2>
-    <div class="image-box">
-      <img src="staff.PNG" alt="客服人員介紹圖" />
+    <div class="glass-card">
+      <h2>客服人員介紹</h2>
+      <div class="image-box">
+        <img src="staff.PNG" alt="客服人員介紹圖" />
+      </div>
     </div>
   </section>
 
   <section id="contact">
-    <h2>加入我們</h2>
-    <p>想了解更多？加入我們的社群平台：</p>
-    <a href="https://discord.gg/vhmhQRxffF" class="button" target="_blank">Discord</a>
-    <a href="https://www.instagram.com/?deoia=1" class="button" target="_blank">Instagram</a>
+    <div class="glass-card">
+      <h2>加入我們</h2>
+      <p>想了解更多？加入我們的社群平台：</p>
+      <a href="https://discord.gg/vhmhQRxffF" class="button" target="_blank">Discord</a>
+      <a href="https://www.instagram.com/?deoia=1" class="button" target="_blank">Instagram</a>
+    </div>
   </section>
 
   <footer>
