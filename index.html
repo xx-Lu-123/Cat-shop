@@ -146,7 +146,7 @@
   function resize() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
-    createStars(Math.floor(w * h / 1500)); // 星星數量依畫面大小決定
+    createStars(Math.floor(w * h / 1300));
   }
 
   function createStars(count) {
@@ -155,27 +155,39 @@
       stars.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        radius: Math.random() * 1.2 + 0.3,
-        alpha: Math.random(),
-        delta: Math.random() * 0.02 + 0.005
+        radius: Math.random() * 1.8 + 0.3,
+        alpha: Math.random() * 0.6 + 0.2,
+        delta: Math.random() * 0.015 + 0.003,
+        vx: (Math.random() - 0.5) * 0.05,
+        vy: (Math.random() - 0.5) * 0.05
       });
     }
   }
 
   function animate() {
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = '#00faff';
+    ctx.globalCompositeOperation = 'lighter';
 
-    stars.forEach(star => {
+    for (const star of stars) {
+      // 閃爍
       star.alpha += star.delta;
-      if (star.alpha >= 1 || star.alpha <= 0) {
-        star.delta = -star.delta;
-      }
-      ctx.globalAlpha = star.alpha;
+      if (star.alpha <= 0.2 || star.alpha >= 1) star.delta = -star.delta;
+
+      // 微移動
+      star.x += star.vx;
+      star.y += star.vy;
+
+      // 回彈邊界
+      if (star.x < 0 || star.x > w) star.vx = -star.vx;
+      if (star.y < 0 || star.y > h) star.vy = -star.vy;
+
+      // 畫星星
       ctx.beginPath();
+      ctx.globalAlpha = star.alpha;
+      ctx.fillStyle = '#00faff';
       ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
       ctx.fill();
-    });
+    }
 
     requestAnimationFrame(animate);
   }
