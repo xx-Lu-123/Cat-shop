@@ -7,13 +7,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
     body {
       font-family: 'Noto Sans TC', sans-serif;
       background: radial-gradient(ellipse at center, #0b0d14 0%, #06070d 100%);
       color: #fff;
       overflow-x: hidden;
       position: relative;
+    }
+
+    /* 星空背景下方加一層螢光線條 */
+    #background-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 255, 255, 0.05),
+        rgba(0, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 20px
+      );
+      z-index: 0;
+      pointer-events: none;
+      animation: moveBg 30s linear infinite;
+    }
+    @keyframes moveBg {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
     }
 
     nav {
@@ -31,15 +56,57 @@
       font-size: 1.2rem;
       color: #00eaff;
     }
-    nav a {
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-links a {
       color: #fff;
-      margin-left: 20px;
       text-decoration: none;
       font-size: 0.95rem;
       transition: color 0.3s ease;
     }
-    nav a:hover {
+    .nav-links a:hover {
       color: #00faff;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #00eaff;
+      margin: 4px 0;
+      transition: all 0.4s ease;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 30px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        width: 200px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #00faff55;
+        display: none;
+      }
+      .nav-links a {
+        margin: 10px 0;
+      }
+      .nav-links.active {
+        display: flex;
+      }
     }
 
     section {
@@ -167,10 +234,16 @@
 <body>
 
 <canvas id="lines"></canvas>
+<div id="background-overlay"></div>
 
 <nav>
   <h1>貓喵商城</h1>
-  <div>
+  <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="nav-links" id="nav-links">
     <a href="#home">首頁</a>
     <a href="#about">關於我們</a>
     <a href="#services">服務</a>
@@ -202,7 +275,7 @@
     <li>遊戲代儲：Roblox、傳說對決、Discord Nitro</li>
     <li>影音代購：YouTube Premium、Netflix、Spotify</li>
     <li>數位工具：VPN、ChatGPT Plus、虛擬卡</li>
-    <li>24小時線上客服、最好的售後✅</li></li>
+    <li>24小時線上客服、最好的售後✅</li>
   </ul>
 </section>
 
@@ -242,7 +315,7 @@
   &copy; 2025 貓喵商城 Cat-Shop | 所有內容均受保護
 </footer>
 
-<!-- AOS -->
+<!-- AOS 動畫套件 -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 1000 });
@@ -302,6 +375,13 @@
   window.addEventListener('resize', resize);
   resize();
   animate();
+</script>
+
+<!-- 漢堡選單控制 -->
+<script>
+  document.getElementById('menu-toggle').addEventListener('click', () => {
+    document.getElementById('nav-links').classList.toggle('active');
+  });
 </script>
 
 </body>
