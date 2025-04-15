@@ -141,48 +141,47 @@
 <script>
   const canvas = document.getElementById('lines');
   const ctx = canvas.getContext('2d');
-  let w, h, lines = [];
+  let w, h, stars = [];
 
   function resize() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
+    createStars(Math.floor(w * h / 1500)); // 星星數量依畫面大小決定
   }
 
-  function createLines(count) {
-    lines = [];
+  function createStars(count) {
+    stars = [];
     for (let i = 0; i < count; i++) {
-      lines.push({
+      stars.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        length: 100 + Math.random() * 200,
-        speed: 0.5 + Math.random(),
-        alpha: 0.2 + Math.random() * 0.5
+        radius: Math.random() * 1.2 + 0.3,
+        alpha: Math.random(),
+        delta: Math.random() * 0.02 + 0.005
       });
     }
   }
 
   function animate() {
     ctx.clearRect(0, 0, w, h);
-    ctx.strokeStyle = '#00faff';
-    lines.forEach(l => {
-      ctx.globalAlpha = l.alpha;
+    ctx.fillStyle = '#00faff';
+
+    stars.forEach(star => {
+      star.alpha += star.delta;
+      if (star.alpha >= 1 || star.alpha <= 0) {
+        star.delta = -star.delta;
+      }
+      ctx.globalAlpha = star.alpha;
       ctx.beginPath();
-      ctx.moveTo(l.x, l.y);
-      ctx.lineTo(l.x, l.y + l.length);
-      ctx.stroke();
-      l.y += l.speed;
-      if (l.y > h) l.y = -l.length;
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
     });
+
     requestAnimationFrame(animate);
   }
 
-  window.addEventListener('resize', () => {
-    resize();
-    createLines(50);
-  });
-
+  window.addEventListener('resize', resize);
   resize();
-  createLines(50);
   animate();
 </script>
 
