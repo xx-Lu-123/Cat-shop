@@ -9,9 +9,27 @@
     * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background: linear-gradient(145deg, #06070c, #0b0d16);
+      background: #05060a;
       color: #fff;
       overflow-x: hidden;
+      position: relative;
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+    .glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top left, rgba(0,255,255,0.1), transparent),
+                  radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent);
+      z-index: -1;
     }
     section {
       min-height: 100vh;
@@ -87,6 +105,9 @@
 </head>
 <body>
 
+  <canvas id="bgCanvas"></canvas>
+  <div class="glow"></div>
+
   <section id="home">
     <header>
       <img src="logo.JPG" alt="貓喵商城 LOGO" />
@@ -103,10 +124,10 @@
   <section id="services">
     <h2>服務項目</h2>
     <ul>
-      <li>遊戲代儲：Roblox、傳說對決、Discord-Nitro、還有很多</li>
-      <li>影音代購：YouTube Premium、Netflix、Spotify</li>
-      <li>數位工具：VPN、ChatGPT Plus、虛擬卡</li>
-      <li>擁有24hr客服、優秀售後服務✔️</li>
+      <li>1.遊戲代儲：Roblox、傳說對決、Discord Nitro</li>
+      <li>2.影音代購：YouTube Premium、Netflix、Spotify</li>
+      <li>3.數位工具：VPN、ChatGPT Plus、虛擬卡</li>
+      <li>24小時在線客服、最好的售後服務✔️</li>
     </ul>
   </section>
 
@@ -130,22 +151,67 @@
 
   <script>
     const sections = document.querySelectorAll('section');
-    const options = {
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver(function(entries, observer) {
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
           observer.unobserve(entry.target);
         }
       });
-    }, options);
+    }, { threshold: 0.1 });
 
-    sections.forEach(section => {
-      observer.observe(section);
-    });
+    sections.forEach(section => observer.observe(section));
+
+    // 背景線條動畫
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    const lines = [];
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Line {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.length = Math.random() * 100 + 50;
+        this.speed = Math.random() * 1 + 0.5;
+        this.opacity = Math.random() * 0.3 + 0.1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x + this.length, this.y);
+        ctx.strokeStyle = `rgba(0,255,255,${this.opacity})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        this.x += this.speed;
+        if (this.x > w) this.reset();
+      }
+    }
+
+    for (let i = 0; i < 100; i++) {
+      lines.push(new Line());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      lines.forEach(line => line.draw());
+      requestAnimationFrame(animate);
+    }
+
+    animate();
   </script>
 </body>
 </html>
