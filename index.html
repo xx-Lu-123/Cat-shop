@@ -5,66 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>貓喵商城 | Cat-Shop</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
     body {
       font-family: 'Noto Sans TC', sans-serif;
-      background: #05060a;
+      background: radial-gradient(ellipse at center, #0b0d14 0%, #06070d 100%);
       color: #fff;
       overflow-x: hidden;
       position: relative;
     }
-    canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-    }
-    .glow {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at top left, rgba(0,255,255,0.1), transparent),
-                  radial-gradient(circle at bottom right, rgba(255,255,255,0.05), transparent);
-      z-index: -1;
-    }
     section {
       min-height: 100vh;
-      padding: 60px 20px;
+      padding: 80px 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s ease-out;
-    }
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
+      position: relative;
+      z-index: 1;
     }
     h1, h2 {
       font-weight: 700;
-      text-shadow: 0 0 10px #00e0ff;
+      text-shadow: 0 0 15px #00eaff;
     }
     p, li {
       font-size: 1.1rem;
       line-height: 1.8;
-      color: #ccc;
+      color: #bbb;
     }
     header {
-      background: radial-gradient(circle, #0e101a 0%, #05060a 100%);
       text-align: center;
-      width: 100%;
-      padding: 40px 0;
     }
     header img {
       width: 140px;
       border-radius: 20px;
-      box-shadow: 0 0 20px #00f2ff99;
+      box-shadow: 0 0 20px #00f2ffaa;
       margin-bottom: 20px;
     }
     ul {
@@ -75,143 +51,140 @@
       width: 100%;
       max-width: 600px;
       border-radius: 16px;
-      box-shadow: 0 0 20px #00f0ff44;
+      box-shadow: 0 0 20px #00f0ff55;
       margin-top: 20px;
     }
     a.button {
       display: inline-block;
       margin: 10px;
-      padding: 10px 20px;
+      padding: 12px 24px;
       border-radius: 30px;
-      background-color: #00e5ff;
+      background: linear-gradient(45deg, #00e5ff, #00b7ff);
       color: #000;
       text-decoration: none;
       font-weight: bold;
-      box-shadow: 0 0 10px #00e5ff88;
+      box-shadow: 0 0 12px #00e5ff88;
       transition: all 0.3s ease;
     }
     a.button:hover {
-      background-color: #00c6e2;
+      background: #00c6e2;
       box-shadow: 0 0 20px #00f2ff;
     }
     footer {
       text-align: center;
-      padding: 20px;
-      background-color: #05050a;
+      padding: 40px 20px;
+      background: linear-gradient(to top, #040509, #0b0c13);
       font-size: 0.9rem;
       color: #888;
+    }
+    #lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
 
-  <canvas id="bgCanvas"></canvas>
-  <div class="glow"></div>
+<canvas id="lines"></canvas>
 
-  <section id="home">
-    <header>
-      <img src="logo.JPG" alt="貓喵商城 LOGO" />
-      <h1>貓喵商城 Cat-Shop</h1>
-      <p>一站式遊戲代儲與數位商品代購平台</p>
-    </header>
-  </section>
+<section id="home" data-aos="fade-up">
+  <header>
+    <img src="logo.JPG" alt="貓喵商城 LOGO" />
+    <h1>貓喵商城 Cat-Shop</h1>
+    <p>一站式遊戲代儲與數位商品代購平台</p>
+  </header>
+</section>
 
-  <section id="about">
-    <h2>我們是誰？</h2>
-    <p>貓喵商城是專為玩家打造的數位服務平台，涵蓋遊戲儲值、影音帳號、訂閱代購與數位工具，快速、安全、價格實惠。</p>
-  </section>
+<section id="about" data-aos="fade-up">
+  <h2>我們是誰？</h2>
+  <p>貓喵商城是專為玩家打造的數位服務平台，涵蓋遊戲儲值、影音帳號、訂閱代購與數位工具，快速、安全、價格實惠。</p>
+</section>
 
-  <section id="services">
-    <h2>服務項目</h2>
-    <ul>
-      <li>1.遊戲代儲：Roblox、傳說對決、Discord Nitro</li>
-      <li>2.影音代購：YouTube Premium、Netflix、Spotify</li>
-      <li>3.數位工具：VPN、ChatGPT Plus、虛擬卡</li>
-      <li>24小時在線客服、最好的售後服務✔️</li>
-    </ul>
-  </section>
+<section id="services" data-aos="fade-up">
+  <h2>服務項目</h2>
+  <ul>
+    <li>遊戲代儲：Roblox、傳說對決、Discord Nitro</li>
+    <li>影音代購：YouTube Premium、Netflix、Spotify</li>
+    <li>數位工具：VPN、ChatGPT Plus、虛擬卡</li>
+    <li>24小時在線客服、最好的售後服務</li>
+  </ul>
+</section>
 
-  <section id="team">
-    <h2>客服人員介紹</h2>
-    <div class="image-box">
-      <img src="staff.PNG" alt="客服人員介紹圖" />
-    </div>
-  </section>
+<section id="team" data-aos="fade-up">
+  <h2>客服人員介紹</h2>
+  <div class="image-box">
+    <img src="staff.PNG" alt="客服人員介紹圖" />
+  </div>
+</section>
 
-  <section id="contact">
-    <h2>加入我們</h2>
-    <p>想了解更多？加入我們的社群平台：</p>
-    <a href="https://discord.gg/vhmhQRxffF" class="button" target="_blank">Discord</a>
-    <a href="https://www.instagram.com/?deoia=1" class="button" target="_blank">Instagram</a>
-  </section>
+<section id="contact" data-aos="fade-up">
+  <h2>加入我們</h2>
+  <p>想了解更多？加入我們的社群平台：</p>
+  <a href="https://discord.gg/vhmhQRxffF" class="button" target="_blank">Discord</a>
+  <a href="https://www.instagram.com/?deoia=1" class="button" target="_blank">Instagram</a>
+</section>
 
-  <footer>
-    &copy; 2025 貓喵商城 Cat-Shop | 所有內容均受保護
-  </footer>
+<footer data-aos="fade-in">
+  &copy; 2025 貓喵商城 Cat-Shop | 所有內容均受保護
+</footer>
 
-  <script>
-    const sections = document.querySelectorAll('section');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1000 });
+</script>
+
+<script>
+  const canvas = document.getElementById('lines');
+  const ctx = canvas.getContext('2d');
+  let w, h, lines = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function createLines(count) {
+    lines = [];
+    for (let i = 0; i < count; i++) {
+      lines.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        length: 100 + Math.random() * 200,
+        speed: 0.5 + Math.random(),
+        alpha: 0.2 + Math.random() * 0.5
       });
-    }, { threshold: 0.1 });
-
-    sections.forEach(section => observer.observe(section));
-
-    // 背景線條動畫
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let w, h;
-    const lines = [];
-
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
     }
+  }
 
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.strokeStyle = '#00faff';
+    lines.forEach(l => {
+      ctx.globalAlpha = l.alpha;
+      ctx.beginPath();
+      ctx.moveTo(l.x, l.y);
+      ctx.lineTo(l.x, l.y + l.length);
+      ctx.stroke();
+      l.y += l.speed;
+      if (l.y > h) l.y = -l.length;
+    });
+    requestAnimationFrame(animate);
+  }
 
-    class Line {
-      constructor() {
-        this.reset();
-      }
+  window.addEventListener('resize', () => {
+    resize();
+    createLines(50);
+  });
 
-      reset() {
-        this.x = Math.random() * w;
-        this.y = Math.random() * h;
-        this.length = Math.random() * 100 + 50;
-        this.speed = Math.random() * 1 + 0.5;
-        this.opacity = Math.random() * 0.3 + 0.1;
-      }
+  resize();
+  createLines(50);
+  animate();
+</script>
 
-      draw() {
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x + this.length, this.y);
-        ctx.strokeStyle = `rgba(0,255,255,${this.opacity})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        this.x += this.speed;
-        if (this.x > w) this.reset();
-      }
-    }
-
-    for (let i = 0; i < 100; i++) {
-      lines.push(new Line());
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, w, h);
-      lines.forEach(line => line.draw());
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  </script>
 </body>
 </html>
