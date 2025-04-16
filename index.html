@@ -1,219 +1,420 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>貓喵商城</title>
-  <meta name="description" content="貓喵商城 - 一站式遊戲代儲與數位商品代購平台，快速、安全、價格實惠。">
-  <meta name="keywords" content="貓喵商城, 遊戲代儲, 數位代購, Discord Nitro, Netflix, Roblox">
-  <meta name="author" content="Cat Meow Shop">
-  <link rel="icon" href="logo.JPG" type="image/jpeg">
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <title>貓喵商城 | Cat-Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
-    /* 星空背景 */
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #000;
+      font-family: 'Noto Sans TC', sans-serif;
+      background: radial-gradient(ellipse at center, #0b0d14 0%, #06070d 100%);
       color: #fff;
       overflow-x: hidden;
-    }
-
-    .stars, .twinkling {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: block;
-      z-index: -1;
-    }
-
-    .stars {
-      background: url('https://cdn.jsdelivr.net/gh/JulianLaiGithub/star-bg/stars.png') repeat;
-      animation: moveStars 200s linear infinite;
-    }
-
-    .twinkling {
-      background: url('https://cdn.jsdelivr.net/gh/JulianLaiGithub/star-bg/twinkling.png') repeat;
-      animation: moveTwinkling 200s linear infinite;
-    }
-
-    @keyframes moveStars {
-      from { background-position: 0 0; }
-      to { background-position: -10000px 5000px; }
-    }
-
-    @keyframes moveTwinkling {
-      from { background-position: 0 0; }
-      to { background-position: 10000px 5000px; }
-    }
-
-    header {
-      text-align: center;
-      padding: 50px 20px 20px;
       position: relative;
     }
 
-    header img {
-      width: 100px;
-      border-radius: 12px;
-      margin-bottom: 10px;
+    #background-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 255, 255, 0.05),
+        rgba(0, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 20px
+      );
+      z-index: 0;
+      pointer-events: none;
+      animation: moveBg 30s linear infinite;
     }
-
-    header h1 a {
-      color: #00eaff;
-      text-decoration: none;
-      font-size: 2.5rem;
+    @keyframes moveBg {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
     }
 
     nav {
-      background-color: #111;
-      padding: 10px 20px;
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: rgba(0,0,0,0.5);
+      padding: 15px 30px;
+      z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      backdrop-filter: blur(10px);
     }
-
-    .hamburger {
-      font-size: 24px;
-      color: #fff;
-      cursor: pointer;
+    nav h1 {
+      font-size: 1.2rem;
+      color: #00eaff;
     }
 
     .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover {
+      color: #00faff;
+    }
+
+    .menu-toggle {
       display: none;
       flex-direction: column;
-      background-color: #111;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      padding: 10px;
-      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: #00eaff;
+      margin: 4px 0;
+      transition: all 0.4s ease;
     }
 
-    .nav-links a {
-      color: #00eaff;
-      text-decoration: none;
-      margin: 5px 0;
+    .menu-toggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
     }
-
-    .nav-links.show {
-      display: flex;
-    }
-
-    section {
-      padding: 80px 40px;
-      text-align: center;
-    }
-
-    section img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    ul li {
-      margin: 10px 0;
-      font-size: 1.1rem;
-    }
-
-    footer {
-      background-color: #111;
-      color: #aaa;
-      text-align: center;
-      padding: 20px;
-    }
-
-    #backToTop {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      display: none;
-      background: #00faff;
-      color: #000;
-      padding: 10px 14px;
-      border-radius: 50%;
-      text-align: center;
-      font-weight: bold;
-      box-shadow: 0 0 10px #00faffaa;
-      text-decoration: none;
-    }
-
-    [data-aos] {
+    .menu-toggle.open span:nth-child(2) {
       opacity: 0;
-      transform: translateY(30px);
-      transition-property: opacity, transform;
+    }
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
     }
 
     @media (max-width: 768px) {
-      section {
-        padding: 60px 16px;
+      .menu-toggle {
+        display: flex;
       }
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 30px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        width: 200px;
+        padding: 0 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #00faff55;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        display: flex;
+      }
+      .nav-links.active {
+        max-height: 500px;
+      }
+      .nav-links a {
+        margin: 15px 0;
+      }
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 100px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    h1, h2 {
+      font-weight: 700;
+      text-shadow: 0 0 15px #00eaff;
+      margin-bottom: 20px;
+    }
+    p, li {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #bbb;
+    }
+    header img {
+      width: 140px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #00f2ffaa;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .image-box img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #00f0ff55;
+      margin-top: 20px;
+    }
+
+    .section-alt {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      max-width: 1200px;
+    }
+
+    .section-alt img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #00f0ff44;
+    }
+
+    .section-alt .text {
+      max-width: 500px;
+    }
+
+    .partners {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .partners img {
+      height: 60px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+    .partners img:hover {
+      opacity: 1;
+    }
+
+    .faq {
+      max-width: 800px;
+      text-align: left;
+    }
+
+    .faq h3 {
+      color: #00eaff;
+      margin-top: 20px;
+    }
+
+    a.button {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #00e5ff, #00b7ff);
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 12px #00e5ff88;
+      transition: all 0.3s ease;
+    }
+    a.button:hover {
+      background: #00c6e2;
+      box-shadow: 0 0 20px #00f2ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(to top, #040509, #0b0c13);
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    #lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <div class="stars"></div>
-  <div class="twinkling"></div>
 
-  <header id="home">
-    <img src="logo.JPG" alt="貓喵商城LOGO" loading="lazy">
-    <h1><a href="#home">貓喵商城</a></h1>
+<canvas id="lines"></canvas>
+<div id="background-overlay"></div>
+
+<nav>
+  <h1>貓喵商城</h1>
+  <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="主選單">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#home">首頁</a>
+    <a href="#about">關於我們</a>
+    <a href="#services">服務</a>
+    <a href="#team">客服</a>
+    <a href="#faq">Q&A</a>
+    <a href="#contact">聯絡</a>
+  </div>
+</nav>
+
+<section id="home" data-aos="fade-up">
+  <header>
+    <img src="logo.JPG" alt="貓喵商城 LOGO" />
+    <h1>貓喵商城 Cat-Shop</h1>
+    <p>一站式遊戲代儲與數位商品代購平台</p>
   </header>
+</section>
 
-  <nav>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <div class="nav-links" id="navLinks">
-      <a href="#about">關於我們</a>
-      <a href="#services">服務項目</a>
-      <a href="#contact">聯絡我們</a>
-    </div>
-  </nav>
+<section id="about" data-aos="fade-up" class="section-alt">
+  <img src="about.JPG" alt="平台介紹圖" />
+  <div class="text">
+    <h2>我們是誰？</h2>
+    <p>貓喵商城是專為玩家打造的數位服務平台，涵蓋遊戲儲值、影音帳號、訂閱代購與數位工具，快速、安全、價格實惠。</p>
+  </div>
+</section>
 
-  <section id="about" data-aos="fade-up">
-    <h2>關於我們</h2>
-    <p>貓喵商城專注於提供遊戲代儲與數位商品代購服務，快速、安全、價格實惠，服務無國界！</p>
-    <img src="catmeow.jpg" alt="貓喵圖片" loading="lazy">
-  </section>
+<section id="services" data-aos="fade-up">
+  <h2>服務項目</h2>
+  <ul>
+    <li>遊戲代儲：Roblox、傳說對決、Discord Nitro</li>
+    <li>影音代購：YouTube Premium、Netflix、Spotify</li>
+    <li>數位工具：VPN、ChatGPT Plus、虛擬卡</li>
+    <li>24小時線上客服、最好的售後✅</li>
+  </ul>
+</section>
 
-  <section id="services" data-aos="fade-up">
-    <h2>服務項目</h2>
-    <ul>
-      <li>Discord Nitro 代購</li>
-      <li>Netflix、YouTube Premium</li>
-      <li>《傳說對決》、《Roblox》遊戲代儲</li>
-      <li>VPN / ChatGPT 等數位訂閱服務</li>
-    </ul>
-  </section>
+<section id="team" data-aos="fade-up" class="section-alt">
+  <div class="text">
+    <h2>客服人員介紹</h2>
+    <p>我們的客服團隊熱心、迅速回應，從不讓你等待。每位成員都經過專業訓練，致力提供最順暢的代購體驗。</p>
+  </div>
+  <img src="staff.PNG" alt="客服人員圖" />
+</section>
 
-  <section id="contact" data-aos="fade-up">
-    <h2>聯絡我們</h2>
-    <p>加入我們的 Discord 或追蹤 Instagram 了解更多！</p>
-    <p>Discord：<a href="https://discord.gg/vhmhQRxffF" target="_blank">點我加入</a></p>
-    <p>Instagram：<a href="https://www.instagram.com/?deoia=1" target="_blank">追蹤我們</a></p>
-  </section>
+<section id="faq" data-aos="fade-up" class="faq">
+  <h2>常見問題</h2>
+  <h3>Q：多久可以收到商品？</h3>
+  <p>A：一般在 20～30 分鐘內完成，如有問題客服會主動聯繫您。</p>
+  <h3>Q：有哪些付款方式？</h3>
+  <p>A：我們支援 8591、轉帳、中信無卡與超商代碼繳費。</p>
+  <h3>Q：交易安全嗎？</h3>
+  <p>A：100% 安全，並有第三方聊天記錄保障，若有疑慮歡迎加入 Discord 詢問。</p>
+</section>
 
-  <footer>
-    <p>© 2025 貓喵商城. 保留所有權利.</p>
-  </footer>
+<section id="contact" data-aos="fade-up">
+  <h2>加入我們</h2>
+  <p>想了解更多？加入我們的社群平台：</p>
+  <a href="https://discord.gg/vhmhQRxffF" class="button" target="_blank">Discord</a>
+  <a href="https://www.instagram.com/?deoia=1" class="button" target="_blank">Instagram</a>
 
-  <a href="#home" id="backToTop">↑</a>
+  <div class="partners">
+    <img src="Yt.PNG" alt="YT" />
+    <img src="discord.PNG" alt="Discord" />
+    <img src="FB_2.JPG" alt="FB" />
+    <img src="Ig_1.JPG" alt="IG" />
+  </div>
+</section>
 
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-    const navLinks = document.getElementById('navLinks');
-    function toggleMenu() {
-      navLinks.classList.toggle('show');
+<footer data-aos="fade-in">
+  &copy; 2025 貓喵商城 Cat-Shop | 所有內容均受保護
+</footer>
+
+<!-- AOS 動畫 -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 1000 });
+</script>
+
+<!-- 星空動畫 -->
+<script>
+  const canvas = document.getElementById('lines');
+  const ctx = canvas.getContext('2d');
+  let w, h, stars = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    createStars(Math.floor(w * h / 1300));
+  }
+
+  function createStars(count) {
+    stars = [];
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        radius: Math.random() * 1.8 + 0.3,
+        alpha: Math.random() * 0.6 + 0.2,
+        delta: Math.random() * 0.015 + 0.003,
+        vx: (Math.random() - 0.5) * 0.05,
+        vy: (Math.random() - 0.5) * 0.05
+      });
     }
-    const backToTop = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'lighter';
+
+    for (const star of stars) {
+      star.alpha += star.delta;
+      if (star.alpha <= 0.2 || star.alpha >= 1) star.delta = -star.delta;
+
+      star.x += star.vx;
+      star.y += star.vy;
+
+      if (star.x < 0 || star.x > w) star.vx = -star.vx;
+      if (star.y < 0 || star.y > h) star.vy = -star.vy;
+
+      ctx.beginPath();
+      ctx.globalAlpha = star.alpha;
+      ctx.fillStyle = '#00faff';
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  animate();
+</script>
+
+<!-- 漢堡選單控制 -->
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const links = document.getElementById('nav-links');
+
+  toggle.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('active');
+    toggle.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      links.classList.remove('active');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', false);
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
