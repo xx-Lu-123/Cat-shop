@@ -6,56 +6,37 @@
   <title>貓喵商城 | Cat-Shop</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="icon" href="logo.JPG" />
   <style>
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-    body {
+  
+    html, body {
+      margin: 0;
+      padding: 0;
       font-family: 'Noto Sans TC', sans-serif;
       background: radial-gradient(ellipse at center, #0b0d14 0%, #06070d 100%);
       color: #fff;
+      scroll-behavior: smooth;
       overflow-x: hidden;
-      position: relative;
     }
-
-    #background-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-image: repeating-linear-gradient(
-        45deg,
-        rgba(0, 255, 255, 0.05),
-        rgba(0, 255, 255, 0.05) 1px,
-        transparent 1px,
-        transparent 20px
-      );
-      z-index: 0;
-      pointer-events: none;
-      animation: moveBg 30s linear infinite;
+    * {
+      box-sizing: border-box;
     }
-    @keyframes moveBg {
-      0% { background-position: 0 0; }
-      100% { background-position: 1000px 1000px; }
-    }
-
     nav {
       position: fixed;
-      top: 0; left: 0; width: 100%;
-      background: rgba(0,0,0,0.5);
+      top: 0; left: 0;
+      width: 100%;
       padding: 15px 30px;
-      z-index: 1000;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      backdrop-filter: blur(10px);
+      z-index: 999;
     }
     nav h1 {
-      font-size: 1.2rem;
       color: #00eaff;
+      font-size: 1.2rem;
     }
-
     .nav-links {
       display: flex;
       gap: 20px;
@@ -64,12 +45,10 @@
       color: #fff;
       text-decoration: none;
       font-size: 0.95rem;
-      transition: color 0.3s ease;
     }
     .nav-links a:hover {
       color: #00faff;
     }
-
     .menu-toggle {
       display: none;
       flex-direction: column;
@@ -83,13 +62,12 @@
       z-index: 1001;
     }
     .menu-toggle span {
-      height: 3px;
       width: 25px;
+      height: 3px;
       background: #00eaff;
       margin: 4px 0;
-      transition: all 0.4s ease;
+      transition: all 0.3s ease;
     }
-
     .menu-toggle.open span:nth-child(1) {
       transform: rotate(45deg) translate(5px, 5px);
     }
@@ -99,11 +77,8 @@
     .menu-toggle.open span:nth-child(3) {
       transform: rotate(-45deg) translate(5px, -5px);
     }
-
     @media (max-width: 768px) {
-      .menu-toggle {
-        display: flex;
-      }
+      .menu-toggle { display: flex; }
       .nav-links {
         position: absolute;
         top: 60px;
@@ -118,7 +93,6 @@
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.4s ease;
-        display: flex;
       }
       .nav-links.active {
         max-height: 500px;
@@ -127,7 +101,6 @@
         margin: 15px 0;
       }
     }
-
     section {
       min-height: 100vh;
       padding: 100px 20px 80px;
@@ -135,18 +108,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-    h1, h2 {
-      font-weight: 700;
-      text-shadow: 0 0 15px #00eaff;
-      margin-bottom: 20px;
-    }
-    p, li {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: #bbb;
+      text-align: center;
     }
     header img {
       width: 140px;
@@ -154,19 +116,20 @@
       box-shadow: 0 0 20px #00f2ffaa;
       margin-bottom: 20px;
     }
+    h1, h2 {
+      text-shadow: 0 0 15px #00eaff;
+      font-weight: 700;
+    }
+    p, li {
+      font-size: 1.1rem;
+      color: #bbb;
+      line-height: 1.8;
+    }
     ul {
-      list-style-type: disc;
-      padding-left: 20px;
-    }
-
-    .image-box img {
-      width: 100%;
+      list-style: disc;
+      text-align: left;
       max-width: 600px;
-      border-radius: 16px;
-      box-shadow: 0 0 20px #00f0ff55;
-      margin-top: 20px;
     }
-
     .section-alt {
       display: flex;
       flex-wrap: wrap;
@@ -175,18 +138,15 @@
       gap: 40px;
       max-width: 1200px;
     }
-
+    .section-alt .text {
+      max-width: 500px;
+    }
     .section-alt img {
       width: 100%;
       max-width: 400px;
       border-radius: 16px;
       box-shadow: 0 0 20px #00f0ff44;
     }
-
-    .section-alt .text {
-      max-width: 500px;
-    }
-
     .partners {
       display: flex;
       flex-wrap: wrap;
@@ -194,26 +154,14 @@
       gap: 30px;
       margin-top: 30px;
     }
-
     .partners img {
       height: 60px;
       opacity: 0.7;
-      transition: opacity 0.3s ease;
+      transition: 0.3s ease;
     }
     .partners img:hover {
       opacity: 1;
     }
-
-    .faq {
-      max-width: 800px;
-      text-align: left;
-    }
-
-    .faq h3 {
-      color: #00eaff;
-      margin-top: 20px;
-    }
-
     a.button {
       display: inline-block;
       margin: 10px;
@@ -221,16 +169,14 @@
       border-radius: 30px;
       background: linear-gradient(45deg, #00e5ff, #00b7ff);
       color: #000;
-      text-decoration: none;
       font-weight: bold;
+      text-decoration: none;
       box-shadow: 0 0 12px #00e5ff88;
-      transition: all 0.3s ease;
     }
     a.button:hover {
       background: #00c6e2;
       box-shadow: 0 0 20px #00f2ff;
     }
-
     footer {
       text-align: center;
       padding: 40px 20px;
@@ -238,14 +184,31 @@
       font-size: 0.9rem;
       color: #888;
     }
-
-    #lines {
+    #background-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: repeating-linear-gradient(45deg,
+        rgba(0, 255, 255, 0.05),
+        rgba(0, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 20px
+      );
+      z-index: 0;
+      pointer-events: none;
+      animation: moveBg 30s linear infinite;
+    }
+    @keyframes moveBg {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
+    canvas {
       position: fixed;
       top: 0;
       left: 0;
+      z-index: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
       pointer-events: none;
     }
   </style>
@@ -257,10 +220,8 @@
 
 <nav>
   <h1>貓喵商城</h1>
-  <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="主選單">
-    <span></span>
-    <span></span>
-    <span></span>
+  <button class="menu-toggle" id="menu-toggle">
+    <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="nav-links">
     <a href="#home">首頁</a>
@@ -274,7 +235,7 @@
 
 <section id="home" data-aos="fade-up">
   <header>
-    <img src="logo.JPG" alt="貓喵商城 LOGO" />
+    <img src="logo.JPG" alt="LOGO" />
     <h1>貓喵商城 Cat-Shop</h1>
     <p>一站式遊戲代儲與數位商品代購平台</p>
   </header>
@@ -334,13 +295,24 @@
   &copy; 2025 貓喵商城 Cat-Shop | 所有內容均受保護
 </footer>
 
-<!-- AOS 動畫 -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 1000 });
 </script>
-
-<!-- 星空動畫 -->
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const links = document.getElementById('nav-links');
+  toggle.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('active');
+    toggle.classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      links.classList.remove('active');
+      toggle.classList.remove('open');
+    });
+  });
+</script>
 <script>
   const canvas = document.getElementById('lines');
   const ctx = canvas.getContext('2d');
@@ -370,50 +342,25 @@
   function animate() {
     ctx.clearRect(0, 0, w, h);
     ctx.globalCompositeOperation = 'lighter';
-
     for (const star of stars) {
       star.alpha += star.delta;
       if (star.alpha <= 0.2 || star.alpha >= 1) star.delta = -star.delta;
-
       star.x += star.vx;
       star.y += star.vy;
-
       if (star.x < 0 || star.x > w) star.vx = -star.vx;
       if (star.y < 0 || star.y > h) star.vy = -star.vy;
-
       ctx.beginPath();
       ctx.globalAlpha = star.alpha;
       ctx.fillStyle = '#00faff';
       ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
       ctx.fill();
     }
-
     requestAnimationFrame(animate);
   }
 
   window.addEventListener('resize', resize);
   resize();
   animate();
-</script>
-
-<!-- 漢堡選單控制 -->
-<script>
-  const toggle = document.getElementById('menu-toggle');
-  const links = document.getElementById('nav-links');
-
-  toggle.addEventListener('click', () => {
-    const isOpen = links.classList.toggle('active');
-    toggle.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', isOpen);
-  });
-
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      links.classList.remove('active');
-      toggle.classList.remove('open');
-      toggle.setAttribute('aria-expanded', false);
-    });
-  });
 </script>
 
 </body>
