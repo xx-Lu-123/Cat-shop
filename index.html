@@ -8,7 +8,6 @@
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <link rel="icon" href="logo.JPG" />
   <style>
-  
     html, body {
       margin: 0;
       padding: 0;
@@ -18,9 +17,7 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
     }
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     nav {
       position: fixed;
       top: 0; left: 0;
@@ -33,37 +30,29 @@
       align-items: center;
       z-index: 999;
     }
-    nav h1 {
-      color: #00eaff;
-      font-size: 1.2rem;
-    }
+    nav h1 { color: #00eaff; font-size: 1.2rem; }
     .nav-links {
-      display: flex;
-      gap: 20px;
+      display: flex; gap: 20px;
     }
     .nav-links a {
       color: #fff;
       text-decoration: none;
       font-size: 0.95rem;
     }
-    .nav-links a:hover {
-      color: #00faff;
-    }
+    .nav-links a:hover { color: #00faff; }
     .menu-toggle {
       display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 30px;
-      height: 30px;
+      width: 30px; height: 30px;
       background: none;
       border: none;
       cursor: pointer;
       z-index: 1001;
     }
     .menu-toggle span {
-      width: 25px;
-      height: 3px;
+      width: 25px; height: 3px;
       background: #00eaff;
       margin: 4px 0;
       transition: all 0.3s ease;
@@ -71,9 +60,7 @@
     .menu-toggle.open span:nth-child(1) {
       transform: rotate(45deg) translate(5px, 5px);
     }
-    .menu-toggle.open span:nth-child(2) {
-      opacity: 0;
-    }
+    .menu-toggle.open span:nth-child(2) { opacity: 0; }
     .menu-toggle.open span:nth-child(3) {
       transform: rotate(-45deg) translate(5px, -5px);
     }
@@ -81,8 +68,7 @@
       .menu-toggle { display: flex; }
       .nav-links {
         position: absolute;
-        top: 60px;
-        right: 30px;
+        top: 60px; right: 30px;
         background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(12px);
         flex-direction: column;
@@ -94,12 +80,8 @@
         overflow: hidden;
         transition: max-height 0.4s ease;
       }
-      .nav-links.active {
-        max-height: 500px;
-      }
-      .nav-links a {
-        margin: 15px 0;
-      }
+      .nav-links.active { max-height: 500px; }
+      .nav-links a { margin: 15px 0; }
     }
     section {
       min-height: 100vh;
@@ -138,9 +120,7 @@
       gap: 40px;
       max-width: 1200px;
     }
-    .section-alt .text {
-      max-width: 500px;
-    }
+    .section-alt .text { max-width: 500px; }
     .section-alt img {
       width: 100%;
       max-width: 400px;
@@ -159,9 +139,7 @@
       opacity: 0.7;
       transition: 0.3s ease;
     }
-    .partners img:hover {
-      opacity: 1;
-    }
+    .partners img:hover { opacity: 1; }
     a.button {
       display: inline-block;
       margin: 10px;
@@ -204,11 +182,9 @@
     }
     canvas {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       z-index: 0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       pointer-events: none;
     }
   </style>
@@ -230,6 +206,7 @@
     <a href="#team">客服</a>
     <a href="#faq">Q&A</a>
     <a href="#contact">聯絡</a>
+    <a href="#terms">服務條款</a>
   </div>
 </nav>
 
@@ -282,13 +259,18 @@
   <p>想了解更多？加入我們的社群平台：</p>
   <a href="https://discord.gg/vhmhQRxffF" class="button" target="_blank">Discord</a>
   <a href="https://www.instagram.com/?deoia=1" class="button" target="_blank">Instagram</a>
-
   <div class="partners">
     <img src="Yt.PNG" alt="YT" />
     <img src="discord.PNG" alt="Discord" />
     <img src="FB_2.JPG" alt="FB" />
     <img src="Ig_1.JPG" alt="IG" />
   </div>
+</section>
+
+<section id="terms" data-aos="fade-up">
+  <h2>服務條款</h2>
+  <p>使用貓喵商城代表您已閱讀並同意我們的服務條款，包括但不限於：代購流程規範、退款原則、帳號安全等內容。詳細條款請參考完整頁面。</p>
+  <a href="terms.html" class="button">查看完整服務條款</a>
 </section>
 
 <footer data-aos="fade-in">
@@ -317,13 +299,11 @@
   const canvas = document.getElementById('lines');
   const ctx = canvas.getContext('2d');
   let w, h, stars = [];
-
   function resize() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
     createStars(Math.floor(w * h / 1300));
   }
-
   function createStars(count) {
     stars = [];
     for (let i = 0; i < count; i++) {
@@ -338,7 +318,6 @@
       });
     }
   }
-
   function animate() {
     ctx.clearRect(0, 0, w, h);
     ctx.globalCompositeOperation = 'lighter';
@@ -357,7 +336,6 @@
     }
     requestAnimationFrame(animate);
   }
-
   window.addEventListener('resize', resize);
   resize();
   animate();
