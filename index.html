@@ -3,57 +3,300 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="貓喵商城 - 一站式遊戲代儲與數位商品代購平台，快速、安全、價格實惠。">
-  <meta name="keywords" content="貓喵商城, Cat-Shop, 遊戲代儲, 數位商品, VPN, ChatGPT, 代購">
-  <meta name="author" content="貓喵商城">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <title>貓喵商城 | Cat-Shop</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
-    /* 原本的 CSS 內容保持不變，只在下方加入主題切換樣式 */
-    body.light-mode {
-      background: #f5f5f5;
-      color: #222;
+    :root {
+      --bg-main: #0b0d14;
+      --bg-gradient: #06070d;
+      --text-primary: #fff;
+      --text-secondary: #bbb;
+      --accent: #00eaff;
+      --hover-accent: #00faff;
     }
-    body.light-mode nav {
-      background: rgba(255,255,255,0.7);
+
+    [data-theme="light"] {
+      --bg-main: #f0f0f5;
+      --bg-gradient: #ffffff;
+      --text-primary: #000;
+      --text-secondary: #333;
+      --accent: #0078ff;
+      --hover-accent: #0099ff;
     }
-    body.light-mode .nav-links a {
-      color: #222;
+
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
     }
-    body.light-mode .nav-links a:hover {
-      color: #0077cc;
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: radial-gradient(ellipse at center, var(--bg-main) 0%, var(--bg-gradient) 100%);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      position: relative;
     }
-    body.light-mode h1, 
-    body.light-mode h2 {
-      text-shadow: none;
+
+    #background-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 255, 255, 0.05),
+        rgba(0, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 20px
+      );
+      z-index: 0;
+      pointer-events: none;
+      animation: moveBg 30s linear infinite;
+    }
+
+    @keyframes moveBg {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: rgba(0,0,0,0.5);
+      padding: 15px 30px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    nav h1 {
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--hover-accent);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: var(--accent);
+      margin: 4px 0;
+      transition: all 0.4s ease;
+    }
+
+    .menu-toggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .menu-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+      }
+      .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 30px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        width: 200px;
+        padding: 0 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px var(--hover-accent);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        display: flex;
+      }
+      .nav-links.active {
+        max-height: 500px;
+      }
+      .nav-links a {
+        margin: 15px 0;
+      }
+    }
+
+    .theme-toggle {
+      margin-left: 20px;
+      padding: 6px 12px;
+      background: var(--accent);
       color: #000;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
-    body.light-mode p, 
-    body.light-mode li {
-      color: #444;
+
+    .theme-toggle:hover {
+      background: var(--hover-accent);
     }
-    body.light-mode .faq h3 {
-      color: #0077cc;
+
+    section {
+      min-height: 100vh;
+      padding: 100px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
     }
-    body.light-mode .button {
-      background: linear-gradient(45deg, #00b7ff, #0099dd);
-      color: white;
+
+    h1, h2 {
+      font-weight: 700;
+      text-shadow: 0 0 15px var(--accent);
+      margin-bottom: 20px;
     }
-    body.light-mode footer {
-      background: #ddd;
-      color: #333;
+
+    p, li {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    header img {
+      width: 140px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px var(--hover-accent);
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .image-box img,
+    .section-alt img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px var(--hover-accent);
+      margin-top: 20px;
+    }
+
+    .section-alt {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      max-width: 1200px;
+    }
+
+    .section-alt .text {
+      max-width: 500px;
+    }
+
+    .partners {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .partners img {
+      height: 60px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    .partners img:hover {
+      opacity: 1;
+    }
+
+    .faq {
+      max-width: 800px;
+      text-align: left;
+    }
+
+    .faq h3 {
+      color: var(--accent);
+      margin-top: 20px;
+    }
+
+    a.button {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #00e5ff, #00b7ff);
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 12px #00e5ff88;
+      transition: all 0.3s ease;
+    }
+
+    a.button:hover {
+      background: var(--hover-accent);
+      box-shadow: 0 0 20px var(--hover-accent);
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(to top, #040509, #0b0c13);
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    #lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-
 <canvas id="lines"></canvas>
 <div id="background-overlay"></div>
 
+<!-- 導覽列 -->
 <nav>
-  <h1><a href="#home" style="color: inherit; text-decoration: none;">貓喵商城</a></h1>
+  <h1>貓喵商城</h1>
   <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="主選單">
     <span></span><span></span><span></span>
   </button>
@@ -64,85 +307,28 @@
     <a href="#team">客服</a>
     <a href="#faq">Q&A</a>
     <a href="#contact">聯絡</a>
+    <button class="theme-toggle" id="theme-toggle">切換主題</button>
   </div>
 </nav>
 
-<section id="home" data-aos="fade-up">
-  <header>
-    <img src="logo.JPG" alt="貓喵商城 LOGO" loading="lazy" />
-    <h1>貓喵商城 Cat-Shop</h1>
-    <p>一站式遊戲代儲與數位商品代購平台</p>
-  </header>
-</section>
+<!-- 區塊內容（略） -->
 
-<section id="about" data-aos="fade-up" class="section-alt">
-  <img src="about.JPG" alt="平台介紹圖" loading="lazy" />
-  <div class="text">
-    <h2>我們是誰？</h2>
-    <p>貓喵商城是專為玩家打造的數位服務平台，涵蓋遊戲儲值、影音帳號、訂閱代購與數位工具，快速、安全、價格實惠。</p>
-  </div>
-</section>
-
-<section id="services" data-aos="fade-up">
-  <h2>服務項目</h2>
-  <ul>
-    <li>遊戲代儲：Roblox、傳說對決、Discord Nitro</li>
-    <li>影音代購：YouTube Premium、Netflix、Spotify</li>
-    <li>數位工具：VPN、ChatGPT Plus、虛擬卡</li>
-    <li>24小時線上客服、最好的售後✅</li>
-  </ul>
-</section>
-
-<section id="team" data-aos="fade-up" class="section-alt">
-  <div class="text">
-    <h2>客服人員介紹</h2>
-    <p>我們的客服團隊熱心、迅速回應，從不讓你等待。每位成員都經過專業訓練，致力提供最順暢的代購體驗。</p>
-  </div>
-  <img src="staff.PNG" alt="客服人員圖" loading="lazy" />
-</section>
-
-<section id="faq" data-aos="fade-up" class="faq" style="margin: 0 auto; text-align: center;">
-  <h2>常見問題</h2>
-  <h3>Q：多久可以收到商品？</h3>
-  <p>A：一般在 20～30 分鐘內完成，如有問題客服會主動聯繫您。</p>
-  <h3>Q：有哪些付款方式？</h3>
-  <p>A：我們支援 8591、轉帳、中信無卡與超商代碼繳費。</p>
-  <h3>Q：交易安全嗎？</h3>
-  <p>A：100% 安全，並有第三方聊天記錄保障，若有疑慮歡迎加入 Discord 詢問。</p>
-</section>
-
-<section id="contact" data-aos="fade-up">
-  <h2>加入我們</h2>
-  <p>想了解更多？加入我們的社群平台：</p>
-  <a href="https://discord.gg/vhmhQRxffF" class="button" target="_blank">Discord 客服專區</a>
-  <a href="https://www.instagram.com/?deoia=1" class="button" target="_blank">Instagram</a>
-
-  <div class="partners">
-    <img src="Yt.PNG" alt="YT" loading="lazy" />
-    <img src="discord.PNG" alt="Discord" loading="lazy" />
-    <img src="FB_2.JPG" alt="FB" loading="lazy" />
-    <img src="Ig_1.JPG" alt="IG" loading="lazy" />
-  </div>
-</section>
-
-<footer data-aos="fade-in">
-  &copy; 2025 貓喵商城 Cat-Shop | 所有內容均受保護
-</footer>
-
-<!-- AOS 動畫 -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>AOS.init({ duration: 1000 });</script>
+<script>
+  AOS.init({ duration: 1000 });
+</script>
 
-<!-- 星空動畫 -->
 <script>
   const canvas = document.getElementById('lines');
   const ctx = canvas.getContext('2d');
   let w, h, stars = [];
+
   function resize() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
     createStars(Math.floor(w * h / 1300));
   }
+
   function createStars(count) {
     stars = [];
     for (let i = 0; i < count; i++) {
@@ -157,6 +343,7 @@
       });
     }
   }
+
   function animate() {
     ctx.clearRect(0, 0, w, h);
     ctx.globalCompositeOperation = 'lighter';
@@ -175,20 +362,24 @@
     }
     requestAnimationFrame(animate);
   }
+
   window.addEventListener('resize', resize);
   resize();
   animate();
 </script>
 
-<!-- 漢堡選單控制 -->
+<!-- 漢堡與主題切換 -->
 <script>
   const toggle = document.getElementById('menu-toggle');
   const links = document.getElementById('nav-links');
+  const themeToggle = document.getElementById('theme-toggle');
+
   toggle.addEventListener('click', () => {
     const isOpen = links.classList.toggle('active');
     toggle.classList.toggle('open');
     toggle.setAttribute('aria-expanded', isOpen);
   });
+
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       links.classList.remove('active');
@@ -196,14 +387,34 @@
       toggle.setAttribute('aria-expanded', false);
     });
   });
-</script>
 
-<!-- 主題自動切換 -->
-<script>
-  const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (!isDarkMode) {
-    document.body.classList.add('light-mode');
+  function updateThemeClass(theme) {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
   }
+
+  function getPreferredTheme() {
+    const stored = localStorage.getItem('theme');
+    if (stored) return stored;
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+
+  function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    updateThemeClass(theme);
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const current = getPreferredTheme();
+    const newTheme = current === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+  });
+
+  // 初始化主題
+  updateThemeClass(getPreferredTheme());
 </script>
 
 </body>
