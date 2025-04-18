@@ -356,6 +356,27 @@
   resize();
   animate();
 </script>
+<script>
+    // 產生隨機星星
+    const container = document.getElementById('starContainer');
+    const numberOfStars = 100;
+    for (let i = 0; i < numberOfStars; i++) {
+      const star = document.createElement('div');
+      const size = Math.random() * 2 + 1;
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      star.classList.add('star');
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.left = `${x}px`;
+      star.style.top = `${y}px`;
+      container.appendChild(star);
+    }
 
+    function toggleMenu(btn) {
+      btn.classList.toggle('open');
+      document.querySelector('.nav-links').classList.toggle('active');
+    }
+ </script>
 </body>
 </html>
