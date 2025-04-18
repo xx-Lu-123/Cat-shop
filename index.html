@@ -18,34 +18,6 @@
       overflow-x: hidden;
     }
     * { box-sizing: border-box; }
-    
-    /* 星空動畫背景 */
-    .star-container {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      overflow: hidden;
-      z-index: -1;
-    }
-
-    .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: twinkle 2s infinite ease-in-out, drift 60s linear infinite;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.5); }
-    }
-
-    @keyframes drift {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(100vh); }
-    }
-
     nav {
       position: fixed;
       top: 0; left: 0;
@@ -190,6 +162,31 @@
       font-size: 0.9rem;
       color: #888;
     }
+    #background-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: repeating-linear-gradient(45deg,
+        rgba(0, 255, 255, 0.05),
+        rgba(0, 255, 255, 0.05) 1px,
+        transparent 1px,
+        transparent 20px
+      );
+      z-index: 0;
+      pointer-events: none;
+      animation: moveBg 30s linear infinite;
+    }
+    @keyframes moveBg {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
     body {
   display: flex;
   justify-content: center;
@@ -201,8 +198,6 @@
   </style>
 </head>
 <body>
-  <!-- 星空動畫容器 -->
-  <div class="star-container" id="starContainer"></div>
 
 <canvas id="lines"></canvas>
 <div id="background-overlay"></div>
@@ -356,27 +351,6 @@
   resize();
   animate();
 </script>
-<script>
-    // 產生隨機星星
-    const container = document.getElementById('starContainer');
-    const numberOfStars = 100;
-    for (let i = 0; i < numberOfStars; i++) {
-      const star = document.createElement('div');
-      const size = Math.random() * 2 + 1;
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
-      star.classList.add('star');
-      star.style.width = `${size}px`;
-      star.style.height = `${size}px`;
-      star.style.left = `${x}px`;
-      star.style.top = `${y}px`;
-      container.appendChild(star);
-    }
 
-    function toggleMenu(btn) {
-      btn.classList.toggle('open');
-      document.querySelector('.nav-links').classList.toggle('active');
-    }
- </script>
 </body>
 </html>
