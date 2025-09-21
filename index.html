@@ -445,26 +445,88 @@
   animate();
 </script>
 <script>
+<script>
   /* 🌙 白天/黑夜切換 */
   const themeToggle = document.getElementById("theme-toggle");
   const body = document.body;
+  const canvas = document.getElementById('lines');
 
-  if (localStorage.getItem("theme") === "light") {
+  function enableLightMode() {
     body.classList.add("light-mode");
     themeToggle.textContent = "☀️";
+    localStorage.setItem("theme", "light");
+    canvas.style.display = "none"; // 隱藏星空
+    generateClouds();
   }
 
+  function enableDarkMode() {
+    body.classList.remove("light-mode");
+    themeToggle.textContent = "🌙";
+    localStorage.setItem("theme", "dark");
+    canvas.style.display = "block"; // 顯示星空
+    removeClouds();
+  }
+
+  // 初始化
+  if (localStorage.getItem("theme") === "light") enableLightMode();
+  else enableDarkMode();
+
   themeToggle.addEventListener("click", () => {
-    body.classList.toggle("light-mode");
-    if (body.classList.contains("light-mode")) {
-      themeToggle.textContent = "☀️";
-      localStorage.setItem("theme", "light");
-    } else {
-      themeToggle.textContent = "🌙";
-      localStorage.setItem("theme", "dark");
-    }
+    if (body.classList.contains("light-mode")) enableDarkMode();
+    else enableLightMode();
   });
+
+  // === 白天模式雲朵生成 ===
+  function generateClouds() {
+    removeClouds();
+    const cloudCount = 15; // 白天雲朵數量
+    for (let i = 0; i < cloudCount; i++) {
+      const cloud = document.createElement('div');
+      cloud.className = 'cloud';
+      const size = Math.random() * 150 + 80; // 雲朵寬度
+      const height = size / 2; // 高度
+      cloud.style.width = size + 'px';
+      cloud.style.height = height + 'px';
+      cloud.style.top = Math.random() * 300 + 'px';
+      cloud.style.animationDuration = (Math.random() * 60 + 60) + 's';
+      cloud.style.left = Math.random() * window.innerWidth + 'px';
+      document.body.appendChild(cloud);
+    }
+  }
+
+  function removeClouds() {
+    document.querySelectorAll('.cloud').forEach(c => c.remove());
+  }
 </script>
+
+<style>
+  /* === 白天模式文字和背景優化 === */
+  body.light-mode {
+    background: linear-gradient(to top, #87ceeb, #b0e0e6); /* 藍天漸層 */
+    color: #222 !important;
+  }
+  body.light-mode nav {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+  }
+  body.light-mode .nav-links a {
+    color: #222;
+  }
+  body.light-mode .nav-links a:hover {
+    color: #0077cc;
+  }
+  body.light-mode nav h1 {
+    color: #0077cc;
+    text-shadow: 0 0 8px #00c6e2;
+  }
+  body.light-mode section h1, 
+  body.light-mode section h2, 
+  body.light-mode p, 
+  body.light-mode li {
+    color: #222;
+    text-shadow: none;
+  }
+</style>
 
 </body>
 </html>
